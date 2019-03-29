@@ -1,9 +1,9 @@
 #include "condition.h"
 #include "iostream"
 
-string * condition::command = nullptr;
-room ** condition::active_room = nullptr;
-inventory * condition::inv = nullptr;
+string * condition::command = 0;
+room ** condition::active_room = 0;
+inventory * condition::inv = 0;
 
 condition::condition(){ }
 condition::~condition(){}

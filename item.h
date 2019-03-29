@@ -12,7 +12,6 @@ public:
     string status;      //whether off or on
     string description;  //description of object
     string writing;     //whats written on ojbect
-    trigger * trig;
     vector <trigger*> trig_list;
     trigger * turn;
     string active_status;   //what it changes to

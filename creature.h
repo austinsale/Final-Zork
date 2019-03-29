@@ -18,7 +18,6 @@ public:
     string status;
     string description;
     vector <string> vulnerability;
-    trigger * trig;
     vector <trigger*> trig_list;
     trigger * atck;
     //******FUNCTIONS***********

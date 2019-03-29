@@ -10,7 +10,7 @@ hcondition::~hcondition(){}
 bool hcondition::check(){
     if(owner.compare("inventory") != 0){
         container * c = (*active_room)->get_container(owner);
-        if(c == nullptr){
+        if(c == 0){
             return false;
         }else{
             return (c->contains(object) != -1) == has;

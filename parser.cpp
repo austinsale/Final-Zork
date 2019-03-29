@@ -16,6 +16,7 @@ parser::parser(string filename)
     char* cstr = new char[txt.size() + 1];  // Create char buffer to store string copy
     strcpy(cstr, txt.c_str());
     doc->parse<0>(cstr);
+    t.close();
 }
 
 parser::~parser(){}
@@ -46,7 +47,7 @@ item * parser::get_item(string name){
             return m;
         }
     }
-    return nullptr;
+    return 0;
 }
 
 container * parser::get_container(string name){
@@ -57,7 +58,7 @@ container * parser::get_container(string name){
             return m;
         }
     }
-    return nullptr;
+    return 0;
 }
 
 creature * parser::get_creature(string name){
@@ -68,7 +69,7 @@ creature * parser::get_creature(string name){
             return m;
         }
     }
-    return nullptr;
+    return 0;
 }
 
 room * parser::get_room(string name){
@@ -79,7 +80,7 @@ room * parser::get_room(string name){
             return m;
         }
     }
-    return nullptr;
+    return 0;
 }
 //****************************************
 
@@ -87,7 +88,7 @@ room * parser::get_room(string name){
 room * parser::make_room(rapidxml::xml_node<> * r_node){
     string nm = r_node -> first_node("name") -> value();
     room * r = get_room(nm);
-    if(r != nullptr){
+    if(r != 0){
         return r;
     }
     r = new room(nm);
@@ -100,7 +101,6 @@ room * parser::make_room(rapidxml::xml_node<> * r_node){
         }
         else if(attr.compare("trigger") == 0){
             trigger * t = make_trigger(i_node);
-            r-> trig = t;
             r->trig_list.push_back(t);
         }
         else if(attr.compare("border") == 0){
@@ -128,7 +128,7 @@ room * parser::make_room(rapidxml::xml_node<> * r_node){
 
 creature * parser::make_creature(rapidxml::xml_node<> * c_node){
     creature * c = get_creature(c_node -> first_node() -> value());
-    if(c != nullptr){
+    if(c != 0){
         return c;
     }
     c = new creature(c_node -> first_node() -> value());
@@ -138,7 +138,6 @@ creature * parser::make_creature(rapidxml::xml_node<> * c_node){
         string attr =  i_node -> name();
         if(attr.compare("trigger") == 0){
             trigger * t = make_trigger(i_node);
-            c->trig = t;
             c->trig_list.push_back(t);
         }else if(attr.compare("vulnerability") == 0){
             c->add_vulnerability(i_node->value());
@@ -153,7 +152,7 @@ creature * parser::make_creature(rapidxml::xml_node<> * c_node){
 container * parser::make_container(rapidxml::xml_node<> * c_node){
     string nm = c_node -> first_node("name") -> value();
     container * c = get_container(nm);
-    if(c != nullptr){
+    if(c != 0){
         return c;
     }
     c = new container(nm);
@@ -171,7 +170,6 @@ container * parser::make_container(rapidxml::xml_node<> * c_node){
             c->init_add(make_item(get_xml_node(attr, t_node->value())));
         }else if(attr.compare("trigger") == 0){
             trigger * t = make_trigger(t_node);
-            c->trig = t;
             c->trig_list.push_back(t);
         }else if(attr.compare("name") != 0){
             cout << "missed: attribute" << attr << endl;
@@ -183,7 +181,7 @@ container * parser::make_container(rapidxml::xml_node<> * c_node){
 item * parser::make_item(rapidxml::xml_node<> * i_node){
     string nm = i_node -> first_node("name") -> value();
     item * i = get_item(nm);
-    if(i != nullptr){
+    if(i != 0){
         return i;
     }
     i = new item(nm);
@@ -202,11 +200,9 @@ item * parser::make_item(rapidxml::xml_node<> * i_node){
             t->add_condition(new ccondition("turn on " + i-> name));
             t->prints.insert(t->prints.begin(), "You activate the " + nm);
             i->turn = t;
-            i->turn->print();
         }else if(attr.compare("trigger") == 0){
             trigger *t = make_trigger(t_node);
             i->trig_list.push_back(t);
-            i->trig = t;
         }else if(attr.compare("name") != 0){
             cout << "missed attribute: " << attr << endl;
         }
@@ -218,7 +214,7 @@ trigger * parser::make_trigger(rapidxml::xml_node<> *t_node){
     //check trigger type
     rapidxml::xml_node<> * type= t_node ->first_node("type");
     bool perm = false;
-    if(type != nullptr){
+    if(type != 0){
         string t = type->value();
         perm = t.compare("permanent") == 0;
     }
@@ -238,13 +234,12 @@ trigger * parser::make_trigger(rapidxml::xml_node<> *t_node){
             t->add_command(i_node -> value());
         }
     }
-    t->print();
     return t;
 }
 
 condition * parser::make_condition(rapidxml::xml_node<> *i_node){
     string obj = i_node -> first_node("object")->value();
-    if(i_node -> first_node("has") != nullptr){
+    if(i_node -> first_node("has") != 0){
         string owner =  i_node -> first_node("owner")->value();
         string has_val = i_node -> first_node("has")->value();
         bool has = has_val.compare("yes") == 0;
@@ -266,7 +261,7 @@ rapidxml::xml_node<> * parser::get_xml_node(string type, string name){
             }
         }
     }
-    return nullptr;
+    return 0;
 }
 //****************************************
 
@@ -284,7 +279,29 @@ void parser::make_game(){
             make_item(obj);
         }
     }
+    doc->clear();
+}
 
+void parser::delete_game(){
+    int size = static_cast<int>(room_vec.size());
+    for(int i = 0; i< size; i++){
+        delete room_vec[static_cast<unsigned long long>(i)];
+    }
+
+    size = static_cast<int>(creature_vec.size());
+    for(int i = 0; i< size; i++){
+        delete creature_vec[static_cast<unsigned long long>(i)];
+    }
+
+    size = static_cast<int>(container_vec.size());
+    for(int i = 0; i< size; i++){
+        delete container_vec[static_cast<unsigned long long>(i)];
+    }
+
+    size = static_cast<int>(item_vec.size());
+    for(int i = 0; i< size; i++){
+        delete item_vec[static_cast<unsigned long long>(i)];
+    }
 }
 
 void parser::print_game(){
@@ -313,35 +330,36 @@ void parser::print_game(){
 
 bool parser::delete_object(string name){
     room * del_room = get_room(name);
-    if(del_room != nullptr){
+    if(del_room != 0){
         int size = static_cast<int>(room_vec.size());
         for(int i = 0; i< size; i++){
             room * temp = room_vec[static_cast<unsigned long long>(i)];
             for(int k = 0; k < 4; k ++){
                 if(temp->border[k] == del_room){
-                   temp->border[k] = nullptr;
+                   temp->border[k] = 0;
                 }
             }
         }
         auto n = find(room_vec.begin(), room_vec.end(), del_room);
         room_vec.erase(n);
+        delete del_room;
         return true;
     }
 
     creature * del_creature = get_creature(name);
-    if(del_creature != nullptr){
+    if(del_creature != 0){
         int size = static_cast<int>(room_vec.size());
         for(int i = 0; i< size; i++){
             room * temp = room_vec[static_cast<unsigned long long>(i)];
             temp->remove_creature(del_creature->name);
         }
-        auto n = find(creature_vec.begin(), creature_vec.end(),del_creature);
-        creature_vec.erase(n);
+        //auto n = find(creature_vec.begin(), creature_vec.end(),del_creature); //dont think this is right
+        //creature_vec.erase(n);
         return true;
     }
 
     container * del_cont = get_container(name);
-    if(del_cont != nullptr){
+    if(del_cont != 0){
         //remove from all rooms
         int size = static_cast<int>(room_vec.size());
         for(int i = 0; i< size; i++){
@@ -349,20 +367,20 @@ bool parser::delete_object(string name){
             temp->remove_container(del_cont->name);
         }
         //delete from parser list
-        auto n = find(container_vec.begin(), container_vec.end(),del_cont);
-        container_vec.erase(n);
+        //auto n = find(container_vec.begin(), container_vec.end(),del_cont);
+        //container_vec.erase(n);
         return true;
     }
 
     item * del_item = get_item(name);
-    if(del_item != nullptr){
+    if(del_item != 0){
         int size = static_cast<int>(room_vec.size());
         for(int i = 0; i< size; i++){
             room * temp = room_vec[static_cast<unsigned long long>(i)];
             temp -> remove(del_item->name);
         }
-        auto n = find(item_vec.begin(), item_vec.end(),del_item);
-        item_vec.erase(n);
+        //auto n = find(item_vec.begin(), item_vec.end(),del_item);
+        //item_vec.erase(n);
         return true;
     }
 

@@ -23,7 +23,6 @@ public:
     vector <container*> container_vec;
     vector <item*> item_vec;
     vector <creature*> creature_vec;
-    trigger * trig;//replace later
     vector <trigger*> trig_list;
 
     //*****FUNCTIONS*******

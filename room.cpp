@@ -8,10 +8,9 @@ room::room()
     name = "generic room";
     description = "generic";
     status = "generic";
-    type = "generic";
-    trig = nullptr;
+    type = "regular";
     for(int i = 0; i < 4; i++){
-        border[i] = nullptr;
+        border[i] = 0;
     }
 }
 
@@ -20,10 +19,9 @@ room::room(string nm)
     name = nm;
     description = "generic";
     status = "generic";
-    type = "generic";
-    trig = nullptr;
+    type = "regular";
     for(int i = 0; i < 4; i++){
-        border[i] = nullptr;
+        border[i] = 0;
     }
 }
 
@@ -91,11 +89,11 @@ int room::find_itemvec(string name){
 //get item from list of containers
 item * room::find_containervec(string name){
     int size = static_cast<int>(container_vec.size());
-    item * m = nullptr;
+    item * m = 0;
     for(int i = 0; i< size; i++){
        if(container_vec[static_cast<unsigned long long>(i)]->is_open){
             m = container_vec[static_cast<unsigned long long>(i)]->remove(name);
-            if(m != nullptr){
+            if(m != 0){
                 break;
             }
        }
@@ -113,7 +111,7 @@ container * room::remove_container(string name){
             return temp;
         }
     }
-    return nullptr;
+    return 0;
 }
 
 creature * room::remove_creature(string name){
@@ -126,13 +124,13 @@ creature * room::remove_creature(string name){
             return temp;
         }
     }
-    return nullptr;
+    return 0;
 }
 
 item * room::get_item(string name){
     int res = find_itemvec(name);
     if(res == -1){
-        return nullptr;
+        return 0;
     }
     return item_vec[static_cast<unsigned long long>(res)];
 }
@@ -146,7 +144,7 @@ container * room::get_container(string name){
             return temp;
         }
     }
-    return nullptr;
+    return 0;
 }
 
 //GETTING CREATURE
@@ -158,7 +156,7 @@ creature * room::get_creature(string name){
             return temp;
         }
     }
-    return nullptr;
+    return 0;
 }
 
 string room::get_object_status(string name){
@@ -170,13 +168,13 @@ string room::get_object_status(string name){
     item * itm;
     for(int i = 0; i< size; i++){
         itm = container_vec[static_cast<unsigned long long>(i)]->get_item(name);
-        if(itm != nullptr){
+        if(itm != 0){
            return itm -> status;
         }
     }
 
     container * temp = get_container(name);
-    if(temp == nullptr){
+    if(temp == 0){
         return "";
     }
     return temp -> status;
@@ -191,9 +189,6 @@ void room::print(){
     cout << "status: " << status << endl;
     cout << "description: " << description << endl;
     cout << "type: " << type << endl;
-    if(trig){
-        cout << "trig" << endl;
-    }
     int size = static_cast<int>(container_vec.size());
     if(size > 0){
         cout << "containers: ";
@@ -223,7 +218,7 @@ void room::print(){
 
     string dir[4] = {"north", "east", "south", "west"};
     for(int i = 0; i < 4; i++){
-        if(border[i] != nullptr){
+        if(border[i] != 0){
             cout << dir[i] << ": " << border[i] -> name << endl;
         }
     }

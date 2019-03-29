@@ -14,7 +14,7 @@ bool scondition::check(){
 
     //get object from inventory and compare status
     item * temp = inv->get_item(object);
-    if(temp != nullptr){
+    if(temp != 0){
         return (temp->status.compare(status) == 0);
     }
 

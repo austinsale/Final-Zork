@@ -48,6 +48,7 @@ public:
     rapidxml::xml_node<> * get_xml_node(string type, string name);
 
     void make_game();
+    void delete_game();
     void print_game();
 
     bool delete_object(string name);

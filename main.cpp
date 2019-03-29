@@ -9,7 +9,7 @@
 using namespace std;
 
 void test_parser(){
-    string txt = "C://Users/Austin/Desktop/QTProjects/ECE 30862/Zork/samples/roomsample.xml";
+    string txt = "C://Users/Austin/Desktop/QTProjects/ECE 30862/Zork/samples/sample.txt.xml";
     parser p = parser(txt);
     p.make_game();
     p.print_game();
@@ -39,6 +39,9 @@ void test_parser(){
             gh.check_all();
         }
     }
+    delete inv;
+    delete dummy;
+    p.delete_game();
 }
 
 void test_file(){

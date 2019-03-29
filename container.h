@@ -15,7 +15,6 @@ public:
     string description;
     bool is_open;
     vector <string> accept;
-    trigger * trig;
     vector <trigger*> trig_list;
     vector <item*> items;
     //**********FUNCTIONS************

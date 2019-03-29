@@ -5,6 +5,7 @@ using namespace std;
 inventory::inventory() : container ()
 {
     name = "Inventory";
+    is_open = true;
 }
 
 void inventory::open(){
@@ -31,5 +32,5 @@ item * inventory::get_item(string name){
             return temp;
         }
     }
-    return nullptr;
+    return 0;
 }

@@ -9,8 +9,7 @@ item::item(){
   status = "default";
   active_status = "default";
   status_phrase = "default";
-  trig = nullptr;
-  turn = nullptr;
+  turn = 0;
 }
 
 item::item(string nm){
@@ -20,8 +19,7 @@ item::item(string nm){
   status = "default";
   active_status = "default";
   status_phrase = "default";
-  trig = nullptr;
-  turn = nullptr;
+  turn = 0;
 }
 
 item::~item(){}

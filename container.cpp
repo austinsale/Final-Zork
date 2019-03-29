@@ -10,7 +10,6 @@ container::container(){
     name = "default";
     status = "unlocked";
     description = "default";
-    trig = nullptr;
     is_open = false;
 }
 
@@ -19,7 +18,6 @@ container::container(string nm){
     status = "unlocked";
     description = "default";
     is_open = false;
-    trig = nullptr;
 }
 
 void container::open(){
@@ -53,11 +51,16 @@ bool container::add(item * new_one){
 
     //check if it is acceptable
     if(accept.empty() | is_acceptable(new_one->name)){
+        if(accept.empty() && !is_open){
+            cout << "Error " << name << " is not opened." << endl;
+            return false;
+        }
         cout << "Item " << new_one -> name << " was added to " << name << "." << endl;
         items.push_back(new_one);
         return true;
     }
     else {
+        cout << "Error" << endl;
         return false;
     }
 }
@@ -74,7 +77,7 @@ item * container::remove(string obj){
         items.erase(n);
         return temp;
     }
-    return nullptr;
+    return 0;
 }
 
 item * container::get_item(string name){
@@ -83,7 +86,7 @@ item * container::get_item(string name){
         item * temp =  items[static_cast<unsigned long long>(index)];
         return temp;
     }
-    return nullptr;
+    return 0;
 }
 
 int container::contains(string name){

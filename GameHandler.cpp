@@ -117,25 +117,36 @@ bool GameHandler::execute_command(){
         return true;
     }
     else if(command_data[0].compare("drop") == 0){
-        item * temp = inv->remove(command_data[1]);
-        if(!temp)
+        item * temp = game_data->get_item(command_data[1]);
+        if(!temp){
             return false;
+        }
+        temp = inv->remove(command_data[1]);
+        if(!temp){
+            cout << "Error! " << command_data[1] << " is not in inventory" << endl;
+            return true;
+        }
         cout << temp->name << " dropped" << endl;
         (*current_room)->add(temp);
         return true;
     }
     else if(command_data[0].compare("put") == 0){
-        item * i_temp = inv->get_item(command_data[1]);
-        if(!i_temp)
+        item * i_temp = game_data->get_item(command_data[1]);
+        if(!i_temp){
             return false;
+        }
+        i_temp = inv->get_item(command_data[1]);
+        if(!i_temp){
+            cout << command_data[1] << " not in inventory." << endl;
+            return true;
+        }
         container * c_temp = (*current_room)->get_container(command_data[2]);
         if(!c_temp)
             return false;
         if(c_temp->add(i_temp)){
            inv->remove(command_data[1]);
-            return true;
         }
-        return false;
+        return true;
     }
     else if(command_data[0].compare("turn on") == 0){
         item * temp = inv->get_item(command_data[1]);
@@ -173,7 +184,7 @@ bool GameHandler::execute_command(){
         container * container_add = game_data->get_container(command_data[1]);
         creature * creature_add = game_data->get_creature(command_data[1]);
 
-        if(item_add == nullptr && container_add == nullptr && creature_add == nullptr)
+        if(item_add == 0 && container_add == 0 && creature_add == 0)
             return false;
 
         container * c_dest = game_data->get_container(command_data[2]);
@@ -239,7 +250,7 @@ bool GameHandler::execute_command(){
 }
 
 bool GameHandler::move(int dir){
-    if((*current_room)->border[dir] == nullptr){
+    if((*current_room)->border[dir] == 0){
         return false;
     }
     else{
@@ -252,9 +263,8 @@ bool GameHandler::move(int dir){
 bool GameHandler::check_all(){
     vector <string> cmds;
     bool triggered = false;
-    if((*current_room)->trig && (*current_room)->trig->check_all()){
-        triggered |= itterate_trig_list((*current_room)->trig_list);
-    }
+    triggered |= itterate_trig_list((*current_room)->trig_list);
+
     vector <container*> container_vec = (*current_room)->container_vec;
     vector <creature*> creature_vec = (*current_room)->creature_vec;
     vector <item*> item_vec = (*current_room)->item_vec;

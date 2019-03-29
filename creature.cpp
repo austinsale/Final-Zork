@@ -8,8 +8,7 @@ creature::creature()
     name = "creature";
     status = "alive";
     description = "default";
-    trig = nullptr;
-    atck = nullptr;
+    atck = 0;
 }
 
 creature::creature(string nm)
@@ -17,8 +16,7 @@ creature::creature(string nm)
     name = nm;
     status = "alive";
     description = "default";
-    trig = nullptr;
-    atck = nullptr;
+    atck = 0;
 }
 
 creature::~creature(){}
