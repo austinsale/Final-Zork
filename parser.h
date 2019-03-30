@@ -29,6 +29,7 @@ public:
     vector <container*> container_vec;
     vector <creature *> creature_vec;
     vector <room *> room_vec;
+    vector <trigger *> trigger_vec;
     // *****FUNCTIONS********
     void add_item(item * i);
     void add_container(container * c);

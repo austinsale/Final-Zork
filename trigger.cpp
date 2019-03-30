@@ -6,7 +6,12 @@ trigger::trigger(bool p)
     active = true;
 }
 
-trigger::~trigger(){};
+trigger::~trigger(){
+    int size = static_cast<int>(conditions.size());
+    for(int i = 0; i< size; i++){
+        delete conditions[static_cast<unsigned long long>(i)];
+    }
+};
 
 bool trigger::check_all(){
     if(!active){

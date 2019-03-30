@@ -228,6 +228,7 @@ trigger * parser::make_trigger(rapidxml::xml_node<> *t_node){
             t->add_command(i_node -> value());
         }
     }
+    trigger_vec.push_back(t);
     return t;
 }
 
@@ -295,6 +296,11 @@ void parser::delete_game(){
     size = static_cast<int>(item_vec.size());
     for(int i = 0; i< size; i++){
         delete item_vec[static_cast<unsigned long long>(i)];
+    }
+
+    size = static_cast<int>(trigger_vec.size());
+    for(int i = 0; i< size; i++){
+        delete trigger_vec[static_cast<unsigned long long>(i)];
     }
 }
 
