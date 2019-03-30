@@ -4,13 +4,24 @@
 #include <sstream>
 #include "GameHandler.h"
 #include "inventory.h"
-
 #include "parser.h"
+
 using namespace std;
 
-void test_parser(){
-    string txt = "C://Users/Austin/Desktop/QTProjects/ECE 30862/Zork/samples/sample.txt.xml";
-    parser p = parser(txt);
+int main(int argc, char*argv[])
+{
+    if(argc != 2){
+        cout << "Incorect parameter!" << endl;
+        return -1;
+    }
+    string * val = new string(argv[1]);
+    string txt = "C://Users/Austin/Desktop/QTProjects/ECE 30862/Zork/" + *val;
+    ifstream t(txt);
+    if(!t.is_open()){
+        cout << "Could not open xml file" << endl;
+        return -1;
+    }
+    parser p = parser(t);
     p.make_game();
     p.print_game();
 
@@ -42,26 +53,8 @@ void test_parser(){
     delete inv;
     delete dummy;
     p.delete_game();
-}
-
-int main()
-{
-    test_parser();
     cout << "Game Over" << endl;
     return 0;
 }
 
 
-//make vector of triggers
-//create make file and test on school machine
-/*
- * Game flow:
- * 1. Make game
- * 2. Make inventory
- * 3. assign active room, assign inventory
- * 4. Read in command (verify correct format)
- * 5. pass in commands and check command triggers
- * 6. execute triggers and go to step 4
- * 7. execute input comannd (verifying content of command)
- * 8. check/execute non-command tiggers
- */

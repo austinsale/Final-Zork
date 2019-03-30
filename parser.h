@@ -20,7 +20,7 @@ using namespace std;
 class parser
 {
 public:
-    parser(string filename);
+    parser(ifstream &t);
     virtual ~parser();
 
     // *****VARIABLES********

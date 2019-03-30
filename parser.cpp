@@ -1,10 +1,9 @@
 #include "parser.h"
 
-parser::parser(string filename)
+parser::parser(ifstream &t)
 {
     rapidxml::xml_document<> d;
     doc = &d;
-    ifstream t(filename);
     stringstream buffer;
     buffer << t.rdbuf();
     string txt = buffer.str();

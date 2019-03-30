@@ -86,7 +86,6 @@ bool GameHandler::internal_validate_data(){//used for trigger command
     if(validate_data() == true){
         return true; //external command
     }else{
-        cout << command_data[0] << command_data[1]<<command_data[2]<<command_data[3]<<'|'<<endl;
         string input = *command;
         int num_words = count(input.begin(), input.end(), ' ');
         if(num_words == 1){
@@ -263,7 +262,7 @@ bool GameHandler::execute_command(){
     else if(command_data[0].compare("Delete") == 0){
         return game_data->delete_object(command_data[1]);
     }
-    else if(command_data[0].compare("Update") == 0){
+    else if(command_data[0].compare("Update") == 0 && command_data[2].compare("to") == 0){
         item * u_item = game_data->get_item(command_data[1]);
         container * u_container = game_data->get_container(command_data[1]);
         room * u_room = game_data->get_room(command_data[1]);
