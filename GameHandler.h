@@ -25,10 +25,6 @@ public:
     inventory * inv;
     room ** current_room;
     bool check_all();
-
-private:
-    string pattern_array[13];
-    string internal_pattern[4];
 };
 
 #endif // INPUTHANDLER_H

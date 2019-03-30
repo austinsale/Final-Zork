@@ -5,18 +5,6 @@ using namespace std;
 
 GameHandler::GameHandler(){
     game_over = false;
-    string ptn_array[13] = {"^(n)$", "^(s)$", "^(e)$", "^(w)$", "^(i)$", "^(take) ([a-zA-Z]+)$",
-                                "^(open exit)$", "^(read) ([a-zA-Z]+)$", "^(drop) ([a-zA-Z]+)$",
-                                "^(put) ([a-zA-Z]+) in ([a-zA-Z]+)$", "^(turn on) ([a-zA-Z]+)$",
-                                "^(attack) ([a-zA-Z]+)+ with ([a-zA-Z]+)$", "^(open) ([a-zA-Z]+)$"};
-    string internal_ptn[4] = {"^(Add) ([a-zA-Z]+) to ([a-zA-Z]+)$", "^(Delete) ([a-zA-Z]+)$",
-                                 "^(Update) ([a-zA-Z]+) to ([a-zA-Z]+)$", "^(Game Over)$"};
-    for(int i = 0; i < 13; i++){
-        pattern_array[i] = ptn_array[i];
-    }
-    for(int k = 0; k < 4; k++){
-        internal_pattern[k] = internal_ptn[k];
-    }
 }
 
 GameHandler::~GameHandler(){}

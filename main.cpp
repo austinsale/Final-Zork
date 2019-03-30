@@ -15,13 +15,14 @@ int main(int argc, char*argv[])
         return -1;
     }
     string * val = new string(argv[1]);
-    string txt = "C://Users/Austin/Desktop/QTProjects/ECE 30862/Zork/" + *val;
-    ifstream t(txt);
+    ifstream t(*val);
+    delete val;
     if(!t.is_open()){
         cout << "Could not open xml file" << endl;
         return -1;
     }
     parser p = parser(t);
+    t.close();
     p.make_game();
     p.print_game();
 
