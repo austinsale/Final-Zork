@@ -1,11 +1,11 @@
 #include <iostream>
-#include <GameHandler.h>
-#include <inventory.h>
 #include <fstream>
 #include <cstring>
 #include <sstream>
+#include "GameHandler.h"
+#include "inventory.h"
+
 #include <parser.h>
-#include <fstream>
 using namespace std;
 
 void test_parser(){
@@ -42,12 +42,6 @@ void test_parser(){
     delete inv;
     delete dummy;
     p.delete_game();
-}
-
-void test_file(){
-    string filename = "C:\\Users\\Austin\\Desktop\\QTProjects\\ECE 30862\\Zork\\samples/sample.txt.xml";
-    string filename2 = "sample.txt.xml";
-    ifstream t(filename2);
 }
 
 int main()

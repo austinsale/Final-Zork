@@ -11,6 +11,7 @@ public:
     GameHandler();
     virtual ~GameHandler( );
     void read_data();
+    bool split_data();
     bool validate_data();
     bool internal_validate_data();
     bool execute_command();
@@ -19,7 +20,7 @@ public:
     bool move(int dir);
     bool game_over;
     string * command;
-    string command_data[3];
+    string command_data[4];
     parser * game_data;
     inventory * inv;
     room ** current_room;

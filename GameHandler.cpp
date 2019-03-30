@@ -34,19 +34,48 @@ void GameHandler::read_data(){
     }
 }
 
-bool GameHandler::validate_data(){
-    smatch m;
-    for(int l = 0; l < 3; l++)
-        command_data[l] = "";
+bool GameHandler::split_data(){
+    string input = *command;
+    if(count(input.begin(), input.end(), ' ') > 3){
+        return false;
+    }
+    int count = 0;
+    int prev = 0;
+    for(int i = 0; i <= input.length(); i++){
+        if(input[i] == ' ' || i == input.length()){
+            command_data[count++] = input.substr(prev,i-prev);
+            prev = i+1;
+        }
+    }
+    return true;
+}
 
-    for(int i = 0; i < 13; i++){
-        regex r(pattern_array[i]);
-        regex_search(*command, m, r);
-        if(m.length() > 0){
-            int size = int(m.size());
-            for(int k = 1; k < size; k++){
-                command_data[k-1] = m[k].str();
-            }
+bool GameHandler::validate_data(){
+    string input = *command;
+    if(!split_data()){
+        return false;
+    }
+    int num_words = count(input.begin(), input.end(), ' ');
+    if(num_words == 0){
+        if(command_data[0].compare("n") == 0 || command_data[0].compare("s") == 0 || command_data[0].compare("e") == 0
+                || command_data[0].compare("w") == 0 || command_data[0].compare("i") == 0){
+            return true;
+        }
+    }
+    else if(num_words == 1){
+        if(command_data[0].compare("take") == 0 || command_data[0].compare("open") == 0 || command_data[0].compare("read") == 0
+                || command_data[0].compare("drop") == 0){
+            return true;
+        }
+    }
+    else if(num_words == 2){
+        if(command_data[0].compare("turn") == 0 && command_data[1].compare("on") == 0){
+            return true;
+        }
+    }else if(num_words == 3){
+        if(command_data[0].compare("attack") == 0 && command_data[2].compare("with") == 0){
+            return true;
+        }else if(command_data[0].compare("put") == 0 && command_data[2].compare("in") == 0){
             return true;
         }
     }
@@ -57,19 +86,20 @@ bool GameHandler::internal_validate_data(){//used for trigger command
     if(validate_data() == true){
         return true; //external command
     }else{
-        smatch m;
-        for(int l = 0; l < 3; l++)
-            command_data[l] = "";
-        //check for internal commands
-        for(int i = 0; i < 4; i++){
-            regex r(internal_pattern[i]);
-            regex_search(*command, m, r);
-            if(m.length() > 0){
-                int size = int(m.size());
-                for(int k = 1; k < size; k++){
-                    command_data[k-1] = m[k].str();
-                }
+        cout << command_data[0] << command_data[1]<<command_data[2]<<command_data[3]<<'|'<<endl;
+        string input = *command;
+        int num_words = count(input.begin(), input.end(), ' ');
+        if(num_words == 1){
+            if(command_data[0].compare("Delete") == 0 ||
+                    (command_data[0].compare("Game") == 0 && command_data[1].compare("Over") == 0)){
                 return true;
+            }
+        }
+        else if(num_words == 3){
+            if(command_data[0].compare("Update") == 0 && command_data[2].compare("to") == 0){
+                return true;
+            }else if(command_data[0].compare("Add") == 0 && command_data[2].compare("to") == 0){
+                     return true;
             }
         }
         return false;
@@ -116,6 +146,14 @@ bool GameHandler::execute_command(){
         return true;
     }
     else if(command_data[0].compare("open") == 0){
+        if(command_data[1].compare("exit")==0){
+            if((*current_room)->type.compare("exit") == 0){
+                *command = "Game Over";
+                execute_command();
+                return true;
+            }
+            return false;
+        }
         container * temp = (*current_room)->get_container(command_data[1]);
         if(!temp)
             return false;
@@ -153,7 +191,7 @@ bool GameHandler::execute_command(){
             cout << command_data[1] << " not in inventory." << endl;
             return true;
         }
-        container * c_temp = (*current_room)->get_container(command_data[2]);
+        container * c_temp = (*current_room)->get_container(command_data[3]);
         if(!c_temp)
             return false;
         if(c_temp->add(i_temp)){
@@ -161,8 +199,8 @@ bool GameHandler::execute_command(){
         }
         return true;
     }
-    else if(command_data[0].compare("turn on") == 0){
-        item * temp = inv->get_item(command_data[1]);
+    else if(command_data[0].compare("turn") == 0 && command_data[1].compare("on") == 0){
+        item * temp = inv->get_item(command_data[2]);
         if(!temp){
             return false;
         }
@@ -179,7 +217,7 @@ bool GameHandler::execute_command(){
         if(!c_temp){
             return false;
         }
-        item * i_temp = inv->get_item(command_data[2]);
+        item * i_temp = inv->get_item(command_data[3]);
         if(!i_temp){
             return false;
         }
@@ -200,8 +238,8 @@ bool GameHandler::execute_command(){
         if(item_add == 0 && container_add == 0 && creature_add == 0)
             return false;
 
-        container * c_dest = game_data->get_container(command_data[2]);
-        room * r_dest = game_data->get_room(command_data[2]);
+        container * c_dest = game_data->get_container(command_data[3]);
+        room * r_dest = game_data->get_room(command_data[3]);
         if(!c_dest && !r_dest)
             return false;
         //add object to dest
@@ -234,25 +272,17 @@ bool GameHandler::execute_command(){
             return false;
         }
         if(u_item){
-            u_item->status = command_data[2];
+            u_item->status = command_data[3];
         }else if(u_container){
-            u_container->status = command_data[2];
+            u_container->status = command_data[3];
         }else if(u_room){
-            u_room->status = command_data[2];
+            u_room->status = command_data[3];
         }else{
-            u_creature->status = command_data[2];
+            u_creature->status = command_data[3];
         }
         return true;
     }
-    else if(command_data[0].compare("open exit") == 0){
-        if((*current_room)->type.compare("exit") == 0){
-            *command = "Game Over";
-            execute_command();
-            return true;
-        }
-        return false;
-    }
-    else if(command_data[0].compare("Game Over") == 0){
+    else if(command_data[0].compare("Game") == 0 && command_data[1].compare("Over") == 0){
         game_over = true;
         cout << "Victory!" << endl;
         return true;
