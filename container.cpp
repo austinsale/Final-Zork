@@ -1,7 +1,5 @@
 #include "container.h"
-#include "item.h"
-#include <iostream>
-#include <algorithm>
+
 using namespace std;
 //nothing written not moveable
 container::~container(){}

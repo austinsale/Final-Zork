@@ -1,7 +1,7 @@
 #ifndef SCONDITION_H
 #define SCONDITION_H
 
-#include <condition.h>
+#include "condition.h"
 #include <string>
 class scondition : public condition
 {

@@ -1,7 +1,8 @@
 #ifndef ITEM_H
 #define ITEM_H
+
 #include <string>
-#include <vector>
+#include "vector"
 using namespace std;
 class trigger;
 class item

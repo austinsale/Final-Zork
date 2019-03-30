@@ -1,18 +1,19 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include<fstream>
+#include <fstream>
 #include <rapidxml.hpp>
 #include <string>
 #include <cstring>
 #include <sstream>
 #include <vector>
-#include <item.h>
-#include <container.h>
-#include <creature.h>
-#include <room.h>
 #include <iostream>
-#include <trigger.h>
+#include <algorithm>
+#include "room.h"
+#include "trigger.h"
+#include "ccondition.h"
+#include "hcondition.h"
+#include "scondition.h"
 
 using namespace std;
 

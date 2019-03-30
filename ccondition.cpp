@@ -1,5 +1,4 @@
 #include "ccondition.h"
-#include <iostream>
 
 ccondition::ccondition(string ac) : condition (){active_command = ac;}
 ccondition::~ccondition(){ }

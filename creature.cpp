@@ -1,6 +1,6 @@
 #include "creature.h"
-#include "iostream"
-#include "algorithm"
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
 creature::creature()

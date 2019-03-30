@@ -1,10 +1,5 @@
 #include "parser.h"
-#include <trigger.h>
-#include <vector>
-#include <ccondition.h>
-#include <hcondition.h>
-#include <scondition.h>
-#include <algorithm>
+
 parser::parser(string filename)
 {
     rapidxml::xml_document<> d;

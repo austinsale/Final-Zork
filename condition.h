@@ -1,9 +1,9 @@
 #ifndef CONDITION_H
 #define CONDITION_H
 
-#include <room.h>
-#include <container.h>
-#include <inventory.h>
+#include "room.h"
+#include "container.h"
+#include "inventory.h"
 #include <string>
 class condition
 {

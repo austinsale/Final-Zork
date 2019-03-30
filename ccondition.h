@@ -1,7 +1,8 @@
 #ifndef CCONDITION_H
 #define CCONDITION_H
 
-#include <condition.h>
+#include "condition.h"
+#include <iostream>
 class ccondition : public condition
 {
 public:

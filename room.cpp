@@ -1,6 +1,6 @@
 #include "room.h"
-#include "algorithm"
-#include "iostream"
+#include <algorithm>
+#include <iostream>
 
 using namespace std;
 room::room()

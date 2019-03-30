@@ -1,7 +1,7 @@
 #ifndef HCONDITION_H
 #define HCONDITION_H
 
-#include <condition.h>
+#include "condition.h"
 class hcondition : public condition
 {
 public:

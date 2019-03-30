@@ -1,5 +1,5 @@
 #include "condition.h"
-#include "iostream"
+#include <iostream>
 
 string * condition::command = 0;
 room ** condition::active_room = 0;

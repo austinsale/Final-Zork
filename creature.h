@@ -2,8 +2,8 @@
 #define CREATURE_H
 #include <string>
 #include <vector>
-#include <item.h>
-#include <container.h>
+#include "item.h"
+#include "container.h"
 using namespace std;
 class trigger;
 class creature

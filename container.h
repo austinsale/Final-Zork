@@ -2,7 +2,9 @@
 #define CONTAINER_H
 #include <string>
 #include <vector>
-#include <item.h>
+#include <iostream>
+#include <algorithm>
+#include "item.h"
 
 using namespace std;
 class trigger;

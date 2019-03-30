@@ -1,9 +1,9 @@
 #ifndef GAMEHANDLER_H
 #define GAMEHANDLER_H
 #include <string>
-#include <room.h>
-#include <inventory.h>
-#include <parser.h>
+#include "room.h"
+#include "inventory.h"
+#include "parser.h"
 using namespace std;
 class GameHandler
 {
