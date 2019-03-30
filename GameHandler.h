@@ -17,7 +17,7 @@ public:
     void mult_command_execute(vector <string> &c);
     bool itterate_trig_list(vector <trigger *> &tv);
     bool move(int dir);
-    bool game_over = false;
+    bool game_over;
     string * command;
     string command_data[3];
     parser * game_data;
@@ -26,12 +26,8 @@ public:
     bool check_all();
 
 private:
-    string pattern_array[13] = {"^(n)$", "^(s)$", "^(e)$", "^(w)$", "^(i)$", "^(take) ([a-zA-Z]+)$",
-                                "^(open exit)$", "^(read) ([a-zA-Z]+)$", "^(drop) ([a-zA-Z]+)$",
-                                "^(put) ([a-zA-Z]+) in ([a-zA-Z]+)$", "^(turn on) ([a-zA-Z]+)$",
-                                "^(attack) ([a-zA-Z]+)+ with ([a-zA-Z]+)$", "^(open) ([a-zA-Z]+)$"};
-    string internal_pattern[4] = {"^(Add) ([a-zA-Z]+) to ([a-zA-Z]+)$", "^(Delete) ([a-zA-Z]+)$",
-                                 "^(Update) ([a-zA-Z]+) to ([a-zA-Z]+)$", "^(Game Over)$"};
+    string pattern_array[13];
+    string internal_pattern[4];
 };
 
 #endif // INPUTHANDLER_H

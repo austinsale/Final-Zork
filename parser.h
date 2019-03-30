@@ -2,13 +2,13 @@
 #define PARSER_H
 
 #include <fstream>
-#include <rapidxml.hpp>
 #include <string>
 #include <cstring>
 #include <sstream>
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include "rapidxml.hpp"
 #include "room.h"
 #include "trigger.h"
 #include "ccondition.h"
