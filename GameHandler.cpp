@@ -186,7 +186,7 @@ bool GameHandler::execute_command(){
         }
         return true;
     }
-    else if(command_data[0].compare("turn") == 0 && command_data[1].compare("on") == 0){
+    else if(command_data[0].compare("turn") == 0){
         item * temp = inv->get_item(command_data[2]);
         if(!temp){
             return false;
@@ -209,7 +209,7 @@ bool GameHandler::execute_command(){
             return false;
         }
         if(c_temp->attack(i_temp)){
-            if(c_temp->atck->check_all()){
+            if(c_temp->atck && c_temp->atck->check_all()){
                 vector <string> cmd = c_temp->atck->execute();
                 mult_command_execute(cmd);
             }
@@ -250,7 +250,7 @@ bool GameHandler::execute_command(){
     else if(command_data[0].compare("Delete") == 0){
         return game_data->delete_object(command_data[1]);
     }
-    else if(command_data[0].compare("Update") == 0 && command_data[2].compare("to") == 0){
+    else if(command_data[0].compare("Update") == 0){
         item * u_item = game_data->get_item(command_data[1]);
         container * u_container = game_data->get_container(command_data[1]);
         room * u_room = game_data->get_room(command_data[1]);
@@ -269,7 +269,7 @@ bool GameHandler::execute_command(){
         }
         return true;
     }
-    else if(command_data[0].compare("Game") == 0 && command_data[1].compare("Over") == 0){
+    else if(command_data[0].compare("Game") == 0){
         game_over = true;
         cout << "Victory!" << endl;
         return true;
@@ -298,23 +298,22 @@ bool GameHandler::check_all(){
     vector <container*> container_vec = (*current_room)->container_vec;
     vector <creature*> creature_vec = (*current_room)->creature_vec;
     vector <item*> item_vec = (*current_room)->item_vec;
-
     int size = static_cast<int>(container_vec.size());
     for(int i = 0; i< size; i++){
         container * temp = container_vec[static_cast<unsigned long long>(i)];
-        itterate_trig_list(temp->trig_list);
+        triggered |= itterate_trig_list(temp->trig_list);
     }
 
     size = static_cast<int>(creature_vec.size());
     for(int i = 0; i< size; i++){
         creature * temp = creature_vec[static_cast<unsigned long long>(i)];
-        itterate_trig_list(temp->trig_list);
+        triggered |= itterate_trig_list(temp->trig_list);
     }
 
     size = static_cast<int>(item_vec.size());
     for(int i = 0; i< size; i++){
         item * temp = item_vec[static_cast<unsigned long long>(i)];
-        itterate_trig_list(temp->trig_list);
+        triggered |= itterate_trig_list(temp->trig_list);
     }
     return triggered;
 }

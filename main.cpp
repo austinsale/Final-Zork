@@ -15,7 +15,7 @@ int main(int argc, char*argv[])
         return -1;
     }
     string * val = new string(argv[1]);
-    ifstream t(*val);
+    ifstream t("C:/Users/Austin/Desktop/QTProjects/ECE 30862/Final-Zork/samples/triggersample.xml");
     delete val;
     if(!t.is_open()){
         cout << "Could not open xml file" << endl;
@@ -24,6 +24,7 @@ int main(int argc, char*argv[])
     parser p = parser(t);
     t.close();
     p.make_game();
+    p.print_game();
 
     room * active_room = p.get_room("Entrance");
     GameHandler gh = GameHandler();
@@ -41,10 +42,11 @@ int main(int argc, char*argv[])
     cout << active_room->description << endl;
     while(!gh.game_over){
         gh.read_data();
-        if(!gh.check_all())
+        if(!gh.check_all()){
             if(!gh.execute_command()){
                 cout << "Error" << endl;
             }
+        }
         if(!gh.game_over){
             *(gh.command)="";
             gh.check_all();

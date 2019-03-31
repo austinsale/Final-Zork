@@ -34,6 +34,9 @@ void creature::add_vulnerability(string thing){
 }
 
 bool creature::is_weakness(string nm){
+    if(vulnerability.empty()){
+        return false;
+    }
     return find(vulnerability.begin(), vulnerability.end(), nm) != vulnerability.end();
 }
 

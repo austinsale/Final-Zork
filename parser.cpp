@@ -229,6 +229,7 @@ trigger * parser::make_trigger(rapidxml::xml_node<> *t_node){
         }
     }
     trigger_vec.push_back(t);
+    t->print();
     return t;
 }
 
