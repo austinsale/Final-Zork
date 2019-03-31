@@ -24,7 +24,6 @@ int main(int argc, char*argv[])
     parser p = parser(t);
     t.close();
     p.make_game();
-    p.print_game();
 
     room * active_room = p.get_room("Entrance");
     GameHandler gh = GameHandler();

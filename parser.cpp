@@ -7,9 +7,10 @@ parser::parser(ifstream &t)
     stringstream buffer;
     buffer << t.rdbuf();
     string txt = buffer.str();
-    char* cstr = new char[txt.size() + 1];  // Create char buffer to store string copy
+    char * cstr = new char[txt.size() + 1];  // Create char buffer to store string copy
     strcpy(cstr, txt.c_str());
     doc->parse<0>(cstr);
+    delete[] cstr;
 }
 
 parser::~parser(){}
@@ -274,7 +275,6 @@ void parser::make_game(){
         }
     }
     doc->clear();
-    delete doc;
 }
 
 void parser::delete_game(){
