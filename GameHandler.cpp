@@ -164,7 +164,7 @@ bool GameHandler::execute_command(){
             cout << "Error! " << command_data[1] << " is not in inventory" << endl;
             return true;
         }
-        cout << temp->name << " dropped" << endl;
+        cout << temp->name << " dropped." << endl;
         (*current_room)->add(temp);
         return true;
     }
@@ -271,7 +271,6 @@ bool GameHandler::execute_command(){
     }
     else if(command_data[0].compare("Game") == 0){
         game_over = true;
-        cout << "Victory!" << endl;
         return true;
     }
     else{

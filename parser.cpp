@@ -192,7 +192,7 @@ item * parser::make_item(rapidxml::xml_node<> * i_node){
         }else if(attr.compare("turnon") == 0){
             trigger * t = make_trigger(t_node);
             t->add_condition(new ccondition("turn on " + i-> name));
-            t->prints.insert(t->prints.begin(), "You activate the " + nm);
+            t->prints.insert(t->prints.begin(), "You activate the " + nm + ".");
             i->turn = t;
         }else if(attr.compare("trigger") == 0){
             trigger *t = make_trigger(t_node);
@@ -229,7 +229,6 @@ trigger * parser::make_trigger(rapidxml::xml_node<> *t_node){
         }
     }
     trigger_vec.push_back(t);
-    t->print();
     return t;
 }
 

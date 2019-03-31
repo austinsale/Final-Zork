@@ -53,7 +53,7 @@ bool container::add(item * new_one){
             cout << "Error " << name << " is not opened." << endl;
             return false;
         }
-        cout << "Item " << new_one -> name << " was added to " << name << "." << endl;
+        cout << "Item " << new_one -> name << " added to " << name << "." << endl;
         items.push_back(new_one);
         return true;
     }
