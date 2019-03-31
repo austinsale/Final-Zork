@@ -15,7 +15,7 @@ int main(int argc, char*argv[])
         return -1;
     }
     string * val = new string(argv[1]);
-    ifstream t("C:/Users/Austin/Desktop/QTProjects/ECE 30862/Final-Zork/samples/triggersample.xml");
+    ifstream t(*val);
     delete val;
     if(!t.is_open()){
         cout << "Could not open xml file" << endl;
